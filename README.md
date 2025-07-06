@@ -1,35 +1,36 @@
 # Network-Insight-Tools
 
-## 概要
+Japanese version is [here](/README_ja.md)
 
-`Network-Insight-Tools` は，基本的なネットワーク分析と情報収集を行うためのPythonスクリプト集です．ポートスキャンによるサービスの発見や，ドメインの登録情報・DNS情報の調査など，ネットワークの基礎的な振る舞いを理解し，トラブルシューティングやセキュリティ学習に役立てることを目的としています．
+## Overview
 
-## 目的
+`Network-Insight-Tools` is a collection of Python scripts designed for basic network analysis and information gathering. It aims to help users understand fundamental network behaviors, troubleshoot issues, and learn about security concepts by discovering services through port scanning and investigating domain registration and DNS information.
 
-このリポジトリは，以下の目的のために開発されました．
+## Purpose
 
-1.  **ネットワークの可視化**: TCPポートスキャンを通じて，ターゲットホスト上で公開されているサービスを特定する．
-2.  **ドメイン情報の収集**: ドメインのWHOIS登録情報や，DNSレコード（IPアドレス，MXレコード，NSレコードなど）を調査する．
-3.  **学習と研究**: ネットワークの仕組み，基本的なプロトコル（TCP/IP，DNS，WHOIS），およびセキュリティ防御策（ASLR, SSPなど）の動作原理を実践的に理解するためのサンプルコードを提供する．
-4.  **開発環境**: `tcp_server.py` のようなサンプルサーバーを提供することで，`tcp_port_scanner.py` のようなクライアントツールの動作検証を容易にする．
+This repository was developed with the following objectives:
 
-## 機能
+1.  **Network Visibility**: Identify publicly exposed services on a target host through TCP port scanning.
+2.  **Domain Information Gathering**: Collect WHOIS registration details and DNS records (IP addresses, MX records, NS records, etc.) for a given domain.
+3.  **Learning and Research**: Provide practical examples to understand network mechanisms, fundamental protocols (TCP/IP, DNS, WHOIS), and security countermeasures (ASLR, SSP, etc.).
+4.  **Development Environment**: Offer a sample server like `tcp_server.py` to facilitate testing and verification of client tools like `tcp_port_scanner.py`.
 
-* **TCP ポートスキャナー (`tcp_port_scanner.py`)**:
-    * 指定したホストのTCPポート範囲をスキャンし，ポートが `OPEN` か `CLOSED` かを判定します．
-    * `concurrent.futures.ThreadPoolExecutor` を利用した並行処理により，高速なスキャンが可能です．
-    * オープンなポートから受信したデータ（例: サーバーからのウェルカムメッセージ）を表示します．
-* **ドメイン情報ツール (`domain_info.py`)**:
-    * ユーザーが入力したドメイン名に対し，WHOISクエリを実行して登録情報（レジストラ，登録日，有効期限，ネームサーバーなど）を取得します．
-    * NSLOOKUP（DNSクエリ）を実行して，ドメインに関連付けられたIPアドレス（IPv4/IPv6），メールサーバー（MXレコード），およびネームサーバー（NSレコード）を取得します．
-* **TCP サンプルサーバー (`tcp_server.py`)**:
-    * 複数の指定されたTCPポートでリッスンするシンプルなマルチスレッドサーバーです．
-    * `tcp_port_scanner.py` の動作確認や，基本的なTCP通信の挙動調査のためのサンプルとして使用できます．
+## Features
 
-## ファイル構成
+* **TCP Port Scanner (`tcp_port_scanner.py`)**:
+    * Scans a specified range of TCP ports on a target host to determine if ports are `OPEN` or `CLOSED`.
+    * Utilizes `concurrent.futures.ThreadPoolExecutor` for concurrent processing, enabling fast scans.
+    * Displays data received from open ports (e.g., welcome messages from servers).
+* **Domain Information Tool (`domain_info.py`)**:
+    * Executes WHOIS queries for user-input domain names to retrieve registration details (registrar, creation date, expiration date, name servers, etc.).
+    * Performs NSLOOKUP (DNS queries) to obtain IP addresses (IPv4/IPv6), Mail Exchange (MX) records, and Name Server (NS) records associated with the domain.
+* **TCP Sample Server (`tcp_server.py`)**:
+    * A simple multi-threaded server that listens on multiple predefined TCP ports.
+    * Can be used as a sample for verifying the behavior of `tcp_port_scanner.py` and for investigating basic TCP communication.
+
+## File Structure
 
 ```
-.
 ├── network_insight_tools
 |   ├── tcp_server.py
 |   ├── tcp_port_scanner.py
@@ -38,35 +39,35 @@
 └── README.md
 ```
 
-## セットアップ
+## Setup
 
-### 前提条件
+### Prerequisites
 
-* Python 3.6+ がインストールされていること．
-* `pip` パッケージマネージャーが利用可能であること．
+* Python 3.6+ installed.
+* `pip` package manager available.
 
-### 必要なライブラリのインストール
+### Installing Required Libraries
 
-以下のコマンドを実行して，必要なPythonライブラリをインストールしてください．
+Run the following command to install the necessary Python libraries:
 
 ```bash
 pip install python-whois dnspython
 ```
 
-## 各ツールの使用方法
+## How to Use Each Tool
 
-### 1. TCP サンプルサーバー (`tcp_server.py`)
+### 1. TCP Sample Server (`tcp_server.py`)
 
-これは `tcp_port_scanner.py` の動作確認のための補助的なツールです．
+This is an auxiliary tool for testing `tcp_port_scanner.py`.
 
-1.  **サーバーを起動する:**
-    新しいターミナルを開き，以下のコマンドを実行します．
+1.  **Start the Server:**
+    Open a new terminal and run the following command:
     ```bash
     python3 tcp_server.py
     ```
-    サーバーは `127.0.0.1` (localhost) のポート `8000, 8001, 8002, 8080` でリッスンを開始します．
-    
-    *サーバー出力例:*
+    The server will start listening on `127.0.0.1` (localhost) on ports `8000, 8001, 8002, 8080`.
+
+    *Server Output Example:*
     ```
     Starting TCP/IP Server...
     Server listening on 127.0.0.1:8000...
@@ -75,17 +76,17 @@ pip install python-whois dnspython
     All server threads started. Listening on ports: [8000, 8001, 8002, 8080]
     Press Ctrl+C to stop the server.
     ```
-2.  サーバーを停止するには，ターミナルで `Ctrl+C` を押します．
+2.  To stop the server, press `Ctrl+C` in the terminal.
 
-### 2. TCP ポートスキャナー (`tcp_port_scanner.py`)
+### 2. TCP Port Scanner (`tcp_port_scanner.py`)
 
-1.  **クライアントを起動する:**
-    サーバーが実行中の状態で，別のターミナルを開き，以下のコマンドを実行します．
+1.  **Start the Client:**
+    While the server is running, open another terminal and execute the following command:
     ```bash
     python3 tcp_port_scanner.py
     ```
-    
-    *クライアント出力例:*
+
+    *Client Output Example:*
     ```
     Starting TCP Port Scan on 127.0.0.1 from port 7999 to 8081...
 
@@ -102,24 +103,24 @@ pip install python-whois dnspython
     Closed/Filtered Ports:
       7999: CLOSED (Connection refused)
       8003: CLOSED (Connection refused)
-      ... (多くの閉鎖ポート) ...
+      ... (many closed ports) ...
 
     Scan complete.
     ```
-    *サーバーのターミナルでは，スキャン中に接続ログが表示されます．*
+    *The server's terminal will display connection logs during the scan.*
 
-### 3. ドメイン情報ツール (`domain_info.py`)
+### 3. Domain Information Tool (`domain_info.py`)
 
-1.  **ツールを起動する:**
-    任意のターミナルで以下のコマンドを実行します．
+1.  **Start the Tool:**
+    Run the following command in any terminal:
     ```bash
     python3 domain_info.py
     ```
-2.  **ドメイン名を入力する:**
-    プロンプトが表示されたら，調査したいドメイン名（例: `google.com`, `example.org`）を入力してEnterキーを押します．
-    *終了するには `exit` と入力します．*
-    
-    *ツール出力例:*
+2.  **Enter a Domain Name:**
+    When prompted, type the domain name you wish to investigate (e.g., `google.com`, `example.org`) and press Enter.
+    *Type `exit` to quit.*
+
+    *Tool Output Example:*
     ```
     --- Domain Information Tool (WHOIS & NSLOOKUP) ---
     This tool fetches registration details and IP addresses for a given domain.
@@ -132,7 +133,7 @@ pip install python-whois dnspython
     Domain Name: EXAMPLE.COM
     Registrar: IANA
     WHOIS Server: whois.iana.org
-    ... (WHOIS登録情報) ...
+    ... (WHOIS registration information) ...
 
     --- NSLOOKUP (DNS Information) for example.com ---
     IPv4 Addresses (A records):
@@ -153,6 +154,6 @@ pip install python-whois dnspython
     Exiting tool. Goodbye!
     ```
 
-## ライセンス
+## License
 
-このプロジェクトはMITライセンスの下で公開されています．詳細については `LICENSE` ファイルを参照してください．（もし `LICENSE` ファイルを別途作成する場合は，この行を残してください．なければ削除可）
+This project is licensed under the MIT License. See the `LICENSE` file for details. (If a `LICENSE` file is to be created separately, keep this line. Otherwise, it can be removed.)
